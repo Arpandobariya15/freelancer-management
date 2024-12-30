@@ -2,33 +2,51 @@
 import React, { useState } from 'react';
 
 const ProjectForm = ({ addProject }) => {
-  const [name, setName] = useState('');
-  const [dueDate, setDueDate] = useState('');
-  const [paymentAmount, setPaymentAmount] = useState('');
-  const [status, setStatus] = useState('active'); // default status
+  // const [name, setName] = useState('');
+  // const [dueDate, setDueDate] = useState('');
+  // const [paymentAmount, setPaymentAmount] = useState('');
+  // const [status, setStatus] = useState('active'); // default status
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!name || !dueDate || !paymentAmount) {
-      alert('Please fill in all fields.');
-      return;
-    }
-    addProject({ name, dueDate, paymentAmount: parseFloat(paymentAmount), status });
-    setName('');
-    setDueDate('');
-    setPaymentAmount('');
-    setStatus('active');
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!name || !dueDate || !paymentAmount) {
+  //     alert('Please fill in all fields.');
+  //     return;
+  //   }
+  //   addProject({ name, dueDate, paymentAmount: parseFloat(paymentAmount), status });
+  //   setName('');
+  //   setDueDate('');
+  //   setPaymentAmount('');
+  //   setStatus('active');
+  // };
+
+  const [productInfo, setProductInfo] = useState({ title : '',duedate : '',amount : '',status : 'Active',payment : 'Pending'})
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const copyProductInfo = { ...productInfo };
+    copyProductInfo[name] = value;
+    setProductInfo(copyProductInfo);
+    console.log(productInfo);
+    
+}
+const addProducts = (e) => {
+  e.preventDefault();
+  
+  addProject(productInfo);
+  setProductInfo({ title: '', duedate :"", amount : "Active", status : "Pending" })
+}
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4" >
+    <form onSubmit={addProducts} className="mb-4" >
       <div className="mb-3">
         <label className="form-label">Project Name</label>
         <input
           type="text"
           className="form-control"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={productInfo.title}
+          name ='title'
+          onChange={handleChange}
           required
         />
       </div>
@@ -37,8 +55,9 @@ const ProjectForm = ({ addProject }) => {
         <input
           type="date"
           className="form-control"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
+          value={productInfo.duedate}
+          name ='duedate'
+          onChange={handleChange}
           required
         />
       </div>
@@ -47,8 +66,9 @@ const ProjectForm = ({ addProject }) => {
         <input
           type="number"
           className="form-control"
-          value={paymentAmount}
-          onChange={(e) => setPaymentAmount(e.target.value)}
+          value={productInfo.amount}
+           name ='amount'
+          onChange={handleChange}
           required
         />
       </div>
@@ -56,8 +76,9 @@ const ProjectForm = ({ addProject }) => {
         <label className="form-label">Status</label>
         <select
           className="form-select"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          value={productInfo.status}
+          name='satus'
+          onChange={handleChange}
         >
           <option value="active">Active</option>
           <option value="completed">Completed</option>
