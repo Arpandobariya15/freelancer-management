@@ -77,7 +77,7 @@ const addProducts = (e) => {
         <select
           className="form-select"
           value={productInfo.status}
-          name='satus'
+          name='status'
           onChange={handleChange}
         >
           <option value="active">Active</option>

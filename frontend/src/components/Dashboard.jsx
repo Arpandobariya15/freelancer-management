@@ -5,7 +5,7 @@ import PaymentsList from './PaymentsList';
 import { APIUrl } from '../utils';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Title } from 'chart.js';
+
 
 
 const Dashboard = () => {
@@ -28,7 +28,6 @@ const Dashboard = () => {
     }
   }
   const addProject = async (data) => {
-
     try {
       const url = `${APIUrl}/product`;
       const headers = {
@@ -47,8 +46,27 @@ const Dashboard = () => {
     } catch (err) {
       console.log(err);
     }
+    fetchProjects()
 
   };
+
+  const deleteProject = async (id) => {
+    try {
+        const url = `${APIUrl}/product/${id}`;
+        const headers = {
+            method: "DELETE"
+        }
+        const response = await fetch(url, headers);
+        
+        const result = await response.json();
+      
+        console.log('--result', result.data);
+        setDataproject(result.data);
+    } catch (err) {
+        console.error(err);
+    }
+    
+}
 
 
   return (
@@ -79,7 +97,7 @@ const Dashboard = () => {
                 </button>
                 <button
                   className="btn btn-danger ms-2"
-                
+                onClick={()=>deleteProject(project._id)}
                 >
                   Delete
                 </button>
